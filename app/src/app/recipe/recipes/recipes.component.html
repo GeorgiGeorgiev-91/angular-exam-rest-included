@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="recipe-title" *ngIf="recipes">
+    <div *ngFor="let recipe of recipes" class="recipe-container">
+      <div class="recipe-name-wrapper">
+        <img class="recipe-image" [attr.src]="recipe.imgUrl" />
+        <div class="recipe-name">
+          <a href="#" class="normal">
+            <h2>{{ recipe.recipeName }}</h2>
+          </a>
+          <div class="item">
+            <div>
+              <p>
+                Date: <time>{{ recipe.created_at }}</time>
+              </p>
+              <div class="nick-name">
+                <p>
+                  Author: <span>{{ recipe.userId.personName }}</span>
+                </p>
+              </div>
+            </div>
+            <div class="likes">
+              <!-- <button class="like">Like</button> -->
+              <p>
+                Likes: <span>{{ recipe.likes.length }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!recipes">Loading Recipes...</div>
+</div>
