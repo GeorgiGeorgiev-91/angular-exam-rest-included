@@ -15,6 +15,4 @@ router.put('/:recipeId', auth(), recipeController.subscribe);
 router.put('/:recipeId/posts/:postId', auth(), postController.editPost);
 router.delete('/:recipeId/posts/:postId', auth(), postController.deletePost);
 
-// router.get('/my-trips/:id/reservations', auth(), recipeController.getReservations);
-
 module.exports = router

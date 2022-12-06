@@ -11,22 +11,24 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AuthRoutingModule } from './auth/auth-routing.module';
 import { RecipeModule } from './recipe/recipe.module';
 import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    NotFoundComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     BrowserModule,
-    AppRoutingModule,
     CoreModule,
     AuthRoutingModule,
-    RecipeModule
+    RecipeModule,
+    AppRoutingModule
   ],
   providers: [
   ],

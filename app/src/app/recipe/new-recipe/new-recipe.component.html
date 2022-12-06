@@ -1,34 +1,61 @@
 <div class="container">
-  <div class="new-theme-border">
-      <div class="header-background">
-          <span>New Theme</span>
+  <div class="new-recipe-border">
+    <div class="header-background">
+      <span>Add a recipe</span>
+    </div>
+    <form>
+      <div class="new-recipe-title">
+        <label for="recipeName">Title <span class="red">*</span></label><br>
+        <input type="text" name="recipeName" id="recipeName" />
+        <p class="error">Title is required.</p>
+        <p class="error">Title must be at least 5 characters long.</p>
       </div>
-      <form>
-          <div class="new-theme-title">
-              <label for="themeName">Title <span class="red">*</span></label>
-              <input type="text" name="themeName" id="themeName">
-              <p class="error">
-                  Theme name is required.
-              </p>
-              <p class="error">
-                  Theme name must be at least 5 characters long.
-              </p>
-          </div>
-          <div class="new-theme-content">
-              <label for="postText">Post <span class="red">*</span></label>
-              <textarea type="text" name="postText" id="postText" rows="8" class="height"></textarea>
-              <p class="error">
-                  The field with your post is required.
-              </p>
-              <p class="error">
-                  Post must be at least 10 characters long.
-              </p>
-          </div>
-          <div class="new-theme-buttons">
-              <button class="cancel">Cancel</button>
-              <button class="public">Post</button>
-          </div>
 
-      </form>
+      <div class="new-recipe-title">
+        <label for="imgUrl">Image URL<span class="red">*</span></label><br>
+        <input type="text" name="imgUrl" id="imgUrl" />
+        <p class="error">Image URL required.</p>
+      </div>
+
+      <p class="new-recipe-title">
+        <label for="category">Category <span class="red">*</span></label><br>
+        <select name="category" id="category">
+          <option value="Meat">Meat</option>
+          <option value="Fish">Fish</option>
+          <option value="Vegan">Vegan</option>
+        </select>
+      </p>
+
+      <div class="new-recipe-content">
+        <label for="products">Products <span class="red">*</span> (one per row) / Example: potatoes - 1 kg /</label>
+        <textarea
+          type="text"
+          name="products"
+          id="products"
+          rows="8"
+          class="height"
+        ></textarea>
+        <p class="error">Products are required.</p>
+      </div>
+
+      <div class="new-recipe-content">
+        <label for="preparation">Preparation <span class="red">*</span></label>
+        <textarea
+          type="text"
+          name="preparation"
+          id="preparation"
+          rows="8"
+          class="height"
+        ></textarea>
+        <p class="error">Preparation is required.</p>
+        <p class="error">Preparation must be at least 10 characters long.</p>
+      </div>
+
+      <div class="new-recipe-buttons">
+        <button class="cancel">Cancel</button>
+        <button class="public">Post</button>
+      </div>
+    </form>
   </div>
 </div>
+<br>

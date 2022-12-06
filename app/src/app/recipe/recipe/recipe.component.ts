@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/api.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { IRecipe } from 'src/app/shared/interfaces';
 
 @Component({
@@ -7,25 +9,27 @@ import { IRecipe } from 'src/app/shared/interfaces';
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.scss']
 })
-export class RecipeComponent implements OnInit {
+export class RecipeComponent {
 
-  recipes: IRecipe[] | null = null;
-  errorFetchingData = false;
+  recipe: IRecipe | undefined;
 
-  constructor(private apiService: ApiService) { }
+  constructor(
+    private apiService: ApiService,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
+    ) {
+      this.fetchRecipe();
+    }
 
-  ngOnInit(): void {
+  fetchRecipe(): void{
+    this.recipe = undefined;
+    const id = this.activatedRoute.snapshot.params['recipeId'];
+    // console.log(this.activatedRoute.snapshot.params['recipeId']);
+    this.apiService.loadRecipe(id).subscribe(recipe => this.recipe = recipe);
+  }
 
-    this.apiService.loadRecipes().subscribe({
-      next: (value) => {
-        this.recipes = value;
-      },
-      error: (err) => {
-        this.errorFetchingData = true;
-        console.log(err);
-        throw ("Error loading recipes");
-      }
-    })
+  get isLogged(): boolean {
+    return this.authService.isLogged;
   }
 
 }

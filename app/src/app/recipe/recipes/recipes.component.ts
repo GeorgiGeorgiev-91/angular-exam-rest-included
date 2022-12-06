@@ -9,7 +9,7 @@ import { IRecipe } from 'src/app/shared/interfaces';
 })
 export class RecipesComponent implements OnInit {
 
-  recipes: IRecipe[] | null = null;
+  recipes: IRecipe[] | undefined;
   errorFetchingData = false;
 
   constructor(private apiService: ApiService) { }

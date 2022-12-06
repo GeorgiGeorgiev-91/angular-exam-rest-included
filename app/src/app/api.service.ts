@@ -20,7 +20,7 @@ export class ApiService {
     return this.httpClient.get<IRecipe[]>(`${apiURL}/recipes/top`)
   }
 
-  loadRecipe(id: number){
+  loadRecipe(id: string){
     return this.httpClient.get<IRecipe>(`${apiURL}/recipes/${id}`);
   }
 }

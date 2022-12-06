@@ -1,3 +1,43 @@
 <div class="container">
-  <p>RECIPE WORKS</p>
+  <div class="recipe-border">
+    <div class="header-background">
+      <span>{{ recipe?.recipeName }}</span>
+    </div>
+    <form>
+      <span><img class="recipe-image" [attr.src]="recipe?.imgUrl" /></span>
+
+      <div><i class="fas fa-heart liked"></i><button class="like" *ngIf="isLogged">Like</button></div><br>
+
+      <div>
+        <span class="titles">Author:</span>
+        <p>{{ recipe?.userId?.personName }}</p>
+      </div>
+
+      <div>
+        <span class="titles">Category:</span>
+        <ul>
+          <li>{{ recipe?.category }}</li>
+        </ul>
+      </div>
+
+      <div>
+        <span class="titles">Products:</span>
+        <ul>
+          <li *ngFor="let product of recipe?.products?.split('\n')">
+            {{ product }}
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <span class="titles">Preparation:</span>
+        <p [innerText]="recipe?.preparation"></p>
+      </div>
+
+      <div class="recipe-buttons">
+        <button class="edit">edit if owner</button>
+      </div>
+    </form>
+  </div>
 </div>
+<br />
