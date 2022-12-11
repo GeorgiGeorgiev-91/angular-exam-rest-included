@@ -6,27 +6,27 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
 import { AuthRoutingModule } from './auth/auth-routing.module';
 import { RecipeModule } from './recipe/recipe.module';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthModule } from './auth/auth.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
     HomeComponent,
     NotFoundComponent
   ],
   imports: [
-    CommonModule,
-    SharedModule,
+    AuthRoutingModule,
+    AuthModule,
     BrowserModule,
     CoreModule,
-    AuthRoutingModule,
+    HttpClientModule,
+    SharedModule,
+    CommonModule,
     RecipeModule,
     AppRoutingModule
   ],

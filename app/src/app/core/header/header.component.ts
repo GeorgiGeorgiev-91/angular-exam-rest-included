@@ -17,8 +17,15 @@ export class HeaderComponent {
     return this.authService.user?.personName || '';
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
-
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/']);
+    });
+  }
 
 }

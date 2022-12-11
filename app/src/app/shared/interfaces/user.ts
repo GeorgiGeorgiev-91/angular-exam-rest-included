@@ -1,11 +1,9 @@
 export interface IUser {
   // _id: string,
   email: string,
-  personName: string,
   // password: string,
-  // tel: string,
-  // city: string,
-  // sex: string,
+  personName: string,
+  sex: string,
   // recipes: string[],
   // posts: string[],
   // created_at: string,

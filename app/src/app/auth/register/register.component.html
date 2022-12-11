@@ -1,78 +1,140 @@
 <div class="container">
-  <form class="register" action="" method="post">
+  <form
+    [formGroup]="form"
+    class="register"
+    action=""
+    method="post"
+    (ngSubmit)="register()"
+  >
+    <fieldset>
+      <h2>Registration Form</h2>
 
-      <fieldset>
-          <h2>Registration Form</h2>
+      <p class="field field-icon">
+        <label for="email">
+          <span>
+            <i class="fas fa-envelope"></i>
+          </span>
+        </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="your_email@site.com"
+          formControlName="email"
+        />
+      </p>
 
-          <!-- personName -->
-          <p class="field field-icon">
-              <label for="personName"><span><i class="fas fa-user"></i></span></label>
-              <input class="input-error" type="text" name="personName" id="personName" placeholder="Maria">
-          </p>
-          <p class="error">
-              Name is required!
-          </p>
+      <ng-container *ngIf="form.get('email')?.touched">
+        <p *ngIf="form.get('email')?.errors?.['required']" class="error">
+          Email is required!
+        </p>
+        <p *ngIf="form.get('email')?.errors?.['invalidEmail']" class="error">
+          Email is not valid!
+        </p>
+      </ng-container>
 
-          <!-- email -->
-          <p class="field field-icon">
-              <label for="email"><span><i class="fas fa-envelope"></i></span></label>
-              <input type="email" name="email" id="email" placeholder="maria@gmail.com">
-          </p>
-          <!-- <p class="error">
-              Email is required!
-          </p>
-          <p class="error">
-              Email is not valid!
-          </p> -->
+      <p class="field field-icon">
+        <label for="password">
+          <span>
+            <i class="fas fa-lock"></i>
+          </span>
+        </label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="******"
+          formControlName="password"
+        />
+      </p>
 
-          <!-- telephone -->
-          <p class="field field-icon">
-              <label for="tel"><span><i class="fas fa-phone"></i></span></label>
-              <input type="text" name="tel" id="tel" placeholder="0987 654 321">
-          </p>
+      <ng-container *ngIf="form.get('personName')?.touched">
+        <p *ngIf="form.get('password')?.errors?.['required']" class="error">
+            Password is required!
+        </p>
 
-          <!-- city -->
-          <p class="field field-icon">
-            <label for="city"><span><i class="fas fa-address-book"></i></span></label>
-            <input type="text" name="city" id="city" placeholder="Sofia">
-          </p>
+        <p *ngIf="form.get('password')?.errors?.['minlength']" class="error">
+            Password must be at least 4 characters!
+        </p>
+      </ng-container>
 
-          <!-- sex -->
-          <p class="field field-icon">
-            <label for="sex"><span><i class="fas fa-mars"></i></span></label>
-            <select name="select-sex" id="select-sex" class="sex">
-              <option value="--">--</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-          </select>
-          </p>
+      <p class="field field-icon">
+        <label for="rePassword">
+          <span>
+            <i class="fas fa-lock"></i>
+          </span>
+        </label>
+        <input
+          type="password"
+          name="rePassword"
+          id="rePassword"
+          placeholder="******"
+          formControlName="rePassword"
+        />
+      </p>
 
-          <!-- password -->
-          <p class="field field-icon">
-              <label for="password"><span><i class="fas fa-lock"></i></span></label>
-              <input type="password" name="password" id="password" placeholder="******">
-          </p>
-          <!-- <p class="error">
-              Password is required!
-          </p>
-          <p class="error">
-              Password must be at least 4 characters!
-          </p> -->
+      <ng-container *ngIf="form.get('personName')?.touched">
+        <p *ngIf="form.get('rePassword')?.errors?.['required']" class="error">
+            Repeat Password is required!
+        </p>
 
-          <!-- rePassword -->
-          <p class="field field-icon">
-              <label for="rePassword"><span><i class="fas fa-lock"></i></span></label>
-              <input type="password" name="rePassword" id="rePassword" placeholder="******">
-          </p>
-          <!-- <p class="error">Repeat Password does not match password!</p> -->
+        <p *ngIf="form.get('rePassword')?.errors?.['sameValue']" class="error">
+            Repeat Password does not match password!
+        </p>
+      </ng-container>
 
-          <button disabled>Create Account</button>
+      <p class="field field-icon">
+        <label for="personName">
+          <span>
+            <i class="fas fa-user"> </i>
+          </span>
+        </label>
+        <input
+          class="input-error"
+          type="text"
+          name="personName"
+          id="personName"
+          placeholder="Your name"
+          formControlName="personName"
+        />
+      </p>
 
-          <p class="text-center">
-              Have an account?
-              <a href="#">Log In</a>
-          </p>
+      <ng-container *ngIf="form.get('personName')?.touched">
+        <p *ngIf="form.get('personName')?.errors?.['required']" class="error">
+          Name is required!
+        </p>
 
-      </fieldset>
+        <p *ngIf="form.get('personName')?.errors?.['minlength']" class="error">
+          Name should be at least 3 characters long!
+        </p>
+      </ng-container>
+
+      <p class="field field-icon">
+        <label for="sex">
+          <span>
+            <i class="fas fa-mars"></i>
+          </span>
+        </label>
+
+        <select
+          name="sex"
+          id="sex"
+          class="sex"
+          formControlName="sex"
+          ngModel="--"
+        >
+          <option selected value="--">--</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </p>
+
+      <button>Create Account</button>
+
+      <p class="text-center">
+        Have an account?
+        <a routerLink="/login">Log In</a>
+      </p>
+    </fieldset>
   </form>
 </div>

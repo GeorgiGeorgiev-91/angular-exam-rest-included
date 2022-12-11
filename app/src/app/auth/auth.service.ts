@@ -1,38 +1,66 @@
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { LocalStorage } from '../core/injection-tokens';
 import { IUser } from '../shared/interfaces';
+
+const apiURL = environment.apiURL;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  user: IUser | undefined;
+  user: IUser | null | undefined = undefined;
 
-  get isLogged(): boolean{
+  get isLogged(): boolean {
     return !!this.user;
   }
 
-  constructor(@Inject(LocalStorage) private localStorage: Window['localStorage']) {
-    try{
-      const localStorage = this.localStorage.getItem('<USER>') || 'ERROR';
-      this.user = JSON.parse(localStorage)
-    } catch {
-      this.user = undefined;
-    }
+  constructor(private http: HttpClient) {
+
   }
 
-  login(email: string, password: string): void{
-    this.user = {
-      email,
-      personName: 'test name'
-    }
-    this.localStorage.setItem('<USER>', JSON.stringify(this.user));
+  login(data: { email: string, password: string }) {
+    return this.http.post<IUser>(`${apiURL}/login`, data, { withCredentials: true }).pipe(
+      tap((user) => this.user = user)
+    )
   }
 
+  register(data: {
+    email: string;
+    password: string;
+    rePassword: string;
+    personName: string;
+    sex: string;
+  }) {
+    return this.http.post<IUser>(`${apiURL}/register`, data, { withCredentials: true }).pipe(
+      tap((user) => this.user = user)
+    );
+  }
 
-  logout(): void{
-    this.user = undefined;
-    this.localStorage.removeItem('<USER>');
-  };
+  getProfileInfo() {
+    return this.http.get<IUser>(`${apiURL}/users/profile`, { withCredentials: true }).pipe(
+      tap((user) => this.user = user)
+    )
+  }
+
+  logout() {
+    return this.http.post<IUser>(`${apiURL}/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => this.user = null)
+    );
+  }
+
+  updateProfile(data: {
+    email: string;
+    password: string;
+    rePassword: string;
+    personName: string;
+    sex: string;
+  }){
+    return this.http.post<IUser>(`${apiURL}/users/profile`, {}, { withCredentials: true }).pipe(
+      tap(() => this.user = null)
+    );
+  }
 }
