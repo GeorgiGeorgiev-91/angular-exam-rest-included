@@ -6,13 +6,32 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    subscribers: [{
-        type: ObjectId,
-        ref: "User"
-    }],
+    imgUrl: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    products: {
+        type: String,
+        required: true
+    },
+    preparation: {
+        type: String,
+        required: true
+    },
     userId: {
         type: ObjectId,
         ref: "User"
+    },
+    likes: [{
+        type: ObjectId,
+        ref: "User"
+    }],
+    likesCount: {
+        type: Number
     },
     posts: [{
         type: ObjectId,

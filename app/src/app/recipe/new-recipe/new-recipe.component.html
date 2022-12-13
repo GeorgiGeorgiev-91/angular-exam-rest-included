@@ -3,23 +3,51 @@
     <div class="header-background">
       <span>Add a recipe</span>
     </div>
-    <form>
+    <form #form="ngForm" (ngSubmit)="createRecipe(form)">
       <div class="new-recipe-title">
-        <label for="recipeName">Title <span class="red">*</span></label><br>
-        <input type="text" name="recipeName" id="recipeName" />
-        <p class="error">Title is required.</p>
-        <p class="error">Title must be at least 5 characters long.</p>
+        <label for="recipeName">Title <span class="red">*</span></label
+        ><br />
+        <input
+          type="text"
+          name="recipeName"
+          id="recipeName"
+          ngModel
+          #recipeNameInput="ngModel"
+          required
+          minlength="3"
+        />
+        <ng-container *ngIf="recipeNameInput.touched">
+          <p *ngIf="recipeNameInput.errors?.['required']" class="error">Title is required.</p>
+          <p *ngIf="recipeNameInput.errors?.['minlength']" class="error">Title must be at least 3 characters long.</p>
+        </ng-container>
       </div>
 
       <div class="new-recipe-title">
-        <label for="imgUrl">Image URL<span class="red">*</span></label><br>
-        <input type="text" name="imgUrl" id="imgUrl" />
-        <p class="error">Image URL required.</p>
+        <label for="imgUrl">Image URL<span class="red">*</span></label
+        ><br />
+        <input
+          type="text"
+          name="imgUrl"
+          id="imgUrl"
+          #imgUrlInput="ngModel"
+          ngModel
+          pattern="https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)"
+          required
+        />
+        <ng-container *ngIf="imgUrlInput.touched">
+          <p *ngIf="imgUrlInput.errors?.['required']" class="error">
+            Image URL is required.
+          </p>
+          <p *ngIf="imgUrlInput.errors?.['pattern']" class="error">
+            Image URL is invalid.
+          </p>
+        </ng-container>
       </div>
 
       <p class="new-recipe-title">
-        <label for="category">Category <span class="red">*</span></label><br>
-        <select name="category" id="category">
+        <label for="category">Category <span class="red">*</span></label
+        ><br />
+        <select name="category" id="category" ngModel="Meat" required>
           <option value="Meat">Meat</option>
           <option value="Fish">Fish</option>
           <option value="Vegan">Vegan</option>
@@ -27,15 +55,25 @@
       </p>
 
       <div class="new-recipe-content">
-        <label for="products">Products <span class="red">*</span> (one per row) / Example: potatoes - 1 kg /</label>
+        <label for="products"
+          >Products <span class="red">*</span> (one per row) / Example: potatoes
+          - 1 kg /</label
+        >
         <textarea
           type="text"
           name="products"
           id="products"
           rows="8"
           class="height"
+          ngModel
+          #productsInput="ngModel"
+          required
         ></textarea>
-        <p class="error">Products are required.</p>
+        <ng-container *ngIf="productsInput.touched">
+          <p *ngIf="productsInput.errors?.['required']" class="error">
+            Products are required.
+          </p>
+        </ng-container>
       </div>
 
       <div class="new-recipe-content">
@@ -46,16 +84,28 @@
           id="preparation"
           rows="8"
           class="height"
+          ngModel
+          #preparationInput="ngModel"
+          required
+          minlength="10"
         ></textarea>
-        <p class="error">Preparation is required.</p>
-        <p class="error">Preparation must be at least 10 characters long.</p>
+        <ng-container *ngIf="preparationInput.touched">
+          <p *ngIf="preparationInput.errors?.['required']" class="error">
+            Preparation is required.
+          </p>
+          <p *ngIf="preparationInput.errors?.['minlength']" class="error">
+            Preparation must be at least 10 characters long.
+          </p>
+        </ng-container>
       </div>
 
       <div class="new-recipe-buttons">
-        <button class="cancel">Cancel</button>
-        <button class="public">Post</button>
+        <button type="button" routerLink="/recipes" class="cancel">
+          Cancel
+        </button>
+        <button class="public">Create</button>
       </div>
     </form>
   </div>
 </div>
-<br>
+<br />

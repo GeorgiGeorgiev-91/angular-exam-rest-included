@@ -1,16 +1,19 @@
 /* recipe list item */
 .container {
   display: flex;
-  align-items: center;
-  justify-content: center
+  align-content: center;
+  justify-content: center;
+  // max-width: 750px;
 }
 
 .recipe-container {
   display: inline-grid;
-  // grid-template-columns: repeat(3, 1fr);
-  // grid-gap: 10px;
+  grid-auto-flow: column;
+  grid-gap: 10px;
   gap: 50px;
   margin: 10px;
+  align-items: center;
+  justify-content: center;
 }
 
 .recipe-image {
@@ -48,16 +51,20 @@ p {
 
 .recipe-title {
   padding: 0;
+  margin-bottom: 20px;
+  max-width: 750px;
 }
 
 .recipe-name {
   width: 100%;
+  font-size: 0.8em
 }
 
 .columns {
   display: flex;
   justify-content: space-between;
   margin-top: 0.7rem;
+
 }
 
 .likes {
@@ -84,4 +91,27 @@ p {
 
 time {
   font-weight: bold;
+}
+
+.pagination {
+  padding: 0.4em 1.5em;
+  color: white;
+  background-color: #f07c39;
+  border: none;
+  border-radius: 0.3em;
+  padding: 0.6em 1.2em;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  outline: none;
+  margin-left: 10px;
+}
+
+.pagination.active {
+  background-color: #2dd465;
+}
+
+.pagination-container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }

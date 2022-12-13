@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import {Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LocalStorage } from '../core/injection-tokens';
 import { IUser } from '../shared/interfaces';
 
 const apiURL = environment.apiURL;
@@ -54,13 +53,11 @@ export class AuthService {
 
   updateProfile(data: {
     email: string;
-    password: string;
-    rePassword: string;
     personName: string;
     sex: string;
   }){
-    return this.http.post<IUser>(`${apiURL}/users/profile`, {}, { withCredentials: true }).pipe(
-      tap(() => this.user = null)
+    return this.http.put<IUser>(`${apiURL}/users/profile`, data, { withCredentials: true }).pipe(
+      tap((user) => this.user = user)
     );
   }
 }

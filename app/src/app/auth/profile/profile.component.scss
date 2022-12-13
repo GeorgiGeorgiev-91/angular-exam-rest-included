@@ -1,7 +1,7 @@
 .profile {
-  width: 100%;
-  max-width: 500px;
-  margin: 2em auto 1rem;
+  width: 40%;
+  min-width: 600px;
+  margin: 2em auto 0;
   padding: .5em;
   border: .3em solid #2dd465;
   border-radius: .5rem;
@@ -10,6 +10,7 @@
   background-color: hsla(0, 0%, 94.1%, .8);
   box-shadow: 0 0 1em 0 #000;
   text-align: center;
+  padding-bottom: 0;
 }
 
 .profile h3 {
@@ -40,15 +41,23 @@
   font-weight: bold;
 }
 
+button+button {
+  margin-left: 1rem;
+}
+
 .profile button {
+  padding: 0.4em 1.5em;
   color: white;
+  background-color: #f07c39;
   border: none;
   border-radius: 0.3em;
   padding: 0.6em 1.2em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
   outline: none;
 }
 
-.flex > input, .flex > div {
+.flex > input, .flex > div, .flex > select {
   width: 55%;
   text-align: left;
   margin: .5em;
@@ -58,14 +67,46 @@
   width: 77%;
 }
 
-.flex select {
-  padding: 0.17em 0;
-}
-
 .red-button {
   background-color: red;
 }
 
 .green-button {
   background-color: green;
+}
+
+.profile i {
+  border: 1px solid;
+  border-right: none;
+  padding: 0.55em;
+  border-top-left-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
+  background-color: #e9ecef;
+}
+
+.profile input, .profile select {
+  flex: 0 1 100%;
+  border: 1px solid;
+  padding-left: 0.55em;
+  border-left: 0.3em solid green;
+  border-top-right-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
+  // height: 38px;
+}
+
+.profile .field {
+  display: flex;
+  flex: 0 1 100%;
+  padding-bottom: 0;
+}
+
+p.error {
+  text-align: left;
+  border-radius: 0.3em;
+  color: red;
+  padding-top: 0;
+}
+
+.input-error {
+  border-left-color: red;
 }

@@ -24,7 +24,6 @@ export class RecipeComponent {
   fetchRecipe(): void{
     this.recipe = undefined;
     const id = this.activatedRoute.snapshot.params['recipeId'];
-    // console.log(this.activatedRoute.snapshot.params['recipeId']);
     this.apiService.loadRecipe(id).subscribe(recipe => this.recipe = recipe);
   }
 

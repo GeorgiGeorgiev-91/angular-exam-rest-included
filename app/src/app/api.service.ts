@@ -12,15 +12,25 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  loadRecipes(){
+  loadRecipes() {
     return this.httpClient.get<IRecipe[]>(`${apiURL}/recipes`)
   }
 
-  loadTopRecipes(){
+  loadTopRecipes() {
     return this.httpClient.get<IRecipe[]>(`${apiURL}/recipes/top`)
   }
 
-  loadRecipe(id: string){
-    return this.httpClient.get<IRecipe>(`${apiURL}/recipes/${id}`);
+  loadRecipe(id: string) {
+    return this.httpClient.get<IRecipe>(`${apiURL}/recipes/${id}`, { withCredentials: true });
+  }
+
+  saveRecipe(data: {
+    recipeName: string;
+    imgUrl: string;
+    category: string;
+    products: string;
+    preparation: string;
+  }) {
+    return this.httpClient.post<IRecipe>(`${apiURL}/recipes`, data, { withCredentials: true })
   }
 }

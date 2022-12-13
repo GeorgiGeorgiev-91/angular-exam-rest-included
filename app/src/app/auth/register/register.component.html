@@ -48,7 +48,7 @@
         />
       </p>
 
-      <ng-container *ngIf="form.get('personName')?.touched">
+      <ng-container *ngIf="form.get('password')?.touched">
         <p *ngIf="form.get('password')?.errors?.['required']" class="error">
             Password is required!
         </p>
@@ -73,7 +73,7 @@
         />
       </p>
 
-      <ng-container *ngIf="form.get('personName')?.touched">
+      <ng-container *ngIf="form.get('rePassword')?.touched">
         <p *ngIf="form.get('rePassword')?.errors?.['required']" class="error">
             Repeat Password is required!
         </p>
@@ -123,7 +123,7 @@
           formControlName="sex"
           ngModel="--"
         >
-          <option selected value="--">--</option>
+          <option value="--">--</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>

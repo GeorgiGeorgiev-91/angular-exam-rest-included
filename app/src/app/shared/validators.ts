@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
-import { filter, Observable, startWith, Subscription, switchMap, takeUntil } from "rxjs";
+import {Observable, Subscription, takeUntil } from "rxjs";
 
 export function emailValidator(control: AbstractControl): ValidationErrors | null {
   if (!control.value) {

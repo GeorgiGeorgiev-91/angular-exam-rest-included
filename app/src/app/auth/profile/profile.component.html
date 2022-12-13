@@ -1,26 +1,118 @@
 <div class="container">
-  <div class="profile"><img src="/assets/no-gender.png" alt="default user">
+  <div class="profile">
+    <ng-container *ngIf="user!.sex === '--'">
+      <img src="/assets/no-gender.png" alt="default user" />
+    </ng-container>
+
+    <ng-container *ngIf="user!.sex === 'Male'">
+      <img src="/assets/male.png" alt="default user" />
+    </ng-container>
+
+    <ng-container *ngIf="user!.sex === 'Female'">
+      <img src="/assets/female.png" alt="default user" />
+    </ng-container>
+
+    <ng-container *ngIf="inUpdateMode">
+      <h3>User Info:</h3>
+      <form #form="ngForm" (ngSubmit)="updateProfile(form)">
+        <div class="flex">
+          <p class="field field-icon">
+            <label for="email">
+              <span>
+                <i class="fas fa-envelope"></i>
+              </span>
+            </label>
+            <input
+              #emailInput="ngModel"
+              [ngModel]="user!.email"
+              type="email"
+              name="email"
+              id="email"
+              value=""
+              required
+              email
+            />
+          </p>
+        </div>
+        <ng-container *ngIf="emailInput.touched">
+          <p *ngIf="emailInput.errors?.['required']" class="error">
+            Email is required!
+          </p>
+          <p *ngIf="emailInput.errors?.['email']" class="error">
+            Email is not valid!
+          </p>
+        </ng-container>
+
+        <div class="flex">
+          <p class="field field-icon">
+            <label for="personName">
+              <span>
+                <i class="fas fa-user"> </i>
+              </span>
+            </label>
+            <input
+              #personNameInput="ngModel"
+              [ngModel]="user!.personName"
+              type="text"
+              name="personName"
+              id="personName"
+              value=""
+              required
+              minlength="3"
+            />
+          </p>
+        </div>
+        <ng-container *ngIf="personNameInput.touched">
+          <p *ngIf="personNameInput.errors?.['required']" class="error">
+            Name is required!
+          </p>
+          <p *ngIf="personNameInput.errors?.['minlength']" class="error">
+            Name should be at least 3 characters long!
+          </p>
+        </ng-container>
+
+        <div class="flex">
+          <p class="field field-icon">
+            <label for="sex">
+              <span>
+                <i class="fas fa-mars"></i>
+              </span>
+            </label>
+
+            <select [ngModel]="user!.sex" name="sex" id="sex" class="sex">
+              <option value="--">--</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </p>
+        </div>
+        <button (click)="inUpdateMode = !inUpdateMode" class="red-button">
+          Cancel
+        </button>
+        <button class="green-button">Save</button>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="!inUpdateMode">
       <h3>User Info:</h3>
       <div class="flex">
-          <p>Email: </p>
-          <p>john.doe@gmail.com</p>
+        <p>Email:</p>
+        <p>{{ user?.email }}</p>
       </div>
       <div class="flex">
-          <p>Name: </p>
-          <p>Johny</p>
+        <p>Name:</p>
+        <p>{{ user?.personName }}</p>
       </div>
       <div class="flex">
-          <p>Phone: </p>
-          <p>+359 885 888 888</p>
+        <p>Sex:</p>
+        <p>{{ user?.sex }}</p>
+
+        <!-- TODO my recipes -->
+        <!-- TODO my likes -->
       </div>
-      <div class="flex">
-        <p>City: </p>
-        <p>Sofia</p>
-      </div>
-      <div class="flex">
-        <p>Sex: </p>
-        <p>Female</p>
-      </div>
-      <button class="edit-button">Edit</button>
+      <button (click)="inUpdateMode = !inUpdateMode" class="edit-button">
+        Edit
+      </button>
+    </ng-container>
   </div>
 </div>
