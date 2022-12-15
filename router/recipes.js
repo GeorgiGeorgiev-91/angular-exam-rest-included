@@ -11,7 +11,7 @@ router.post('/', auth(), recipeController.createRecipe);
 
 router.get('/:recipeId', recipeController.getRecipe);
 router.post('/:recipeId', auth(), postController.createPost);
-router.put('/:recipeId', auth(), recipeController.subscribe);
+router.put('/:recipeId', auth(), recipeController.editRecipeInfo);
 router.put('/:recipeId/posts/:postId', auth(), postController.editPost);
 router.delete('/:recipeId/posts/:postId', auth(), postController.deletePost);
 

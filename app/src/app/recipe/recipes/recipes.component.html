@@ -4,12 +4,12 @@
       <div [routerLink]="['/recipes', recipe._id]" class="recipe-name-wrapper">
         <img class="recipe-image" [attr.src]="recipe.imgUrl" />
         <div class="recipe-name">
-          <h2>{{ recipe.recipeName }}</h2>
+          <div class="title">{{ recipe.recipeName | shorten: 35 }}</div>
 
           <div class="item">
             <div>
               <p>
-                Date: <time>{{ recipe.created_at }}</time>
+                Date: <time>{{ recipe.created_at | betterDate }}</time>
               </p>
               <div class="nick-name">
                 <p>

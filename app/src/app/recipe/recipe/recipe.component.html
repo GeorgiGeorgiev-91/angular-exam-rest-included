@@ -1,43 +1,174 @@
 <div class="container">
   <div class="recipe-border">
-    <div class="header-background">
-      <span>{{ recipe?.recipeName }}</span>
-    </div>
-    <form>
-      <span><img class="recipe-image" [attr.src]="recipe?.imgUrl" /></span>
-
-      <div><i class="fas fa-heart liked"></i><button class="like" *ngIf="isLogged">Like</button></div><br>
-
-      <div>
-        <span class="titles">Author:</span>
-        <p>{{ recipe?.userId?.personName }}</p>
+    <ng-container *ngIf="!inUpdateMode">
+      <div class="header-background">
+        <span>{{ recipe?.recipeName }}</span>
       </div>
+      <form>
+        <span><img class="recipe-image" [attr.src]="recipe?.imgUrl" /></span>
 
-      <div>
-        <span class="titles">Category:</span>
-        <ul>
-          <li>{{ recipe?.category }}</li>
-        </ul>
-      </div>
+        <div>
+          <i class="fas fa-heart liked"></i
+          ><button class="like" *ngIf="isLogged">Like</button>
+        </div>
+        <br />
 
-      <div>
-        <span class="titles">Products:</span>
-        <ul>
-          <li *ngFor="let product of recipe?.products?.split('\n')">
-            {{ product }}
-          </li>
-        </ul>
-      </div>
+        <div>
+          <span class="titles">Author:</span>
+          <p>{{ recipe?.userId?.personName }}</p>
+        </div>
 
-      <div>
-        <span class="titles">Preparation:</span>
-        <p [innerText]="recipe?.preparation"></p>
-      </div>
+        <div>
+          <span class="titles">Category:</span>
+          <ul>
+            <li>{{ recipe?.category }}</li>
+          </ul>
+        </div>
 
-      <div class="recipe-buttons">
-        <button class="edit">edit if owner</button>
-      </div>
-    </form>
+        <div>
+          <span class="titles">Products:</span>
+          <ul>
+            <li *ngFor="let product of recipe?.products?.split('\n')">
+              {{ product }}
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="titles">Preparation:</span>
+          <p [innerText]="recipe?.preparation"></p>
+        </div>
+
+        <ng-container *ngIf="isOwner">
+          <div class="recipe-buttons">
+            <button (click)="inUpdateMode = !inUpdateMode" class="edit-button">
+              edit if owner
+            </button>
+          </div>
+        </ng-container>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="inUpdateMode">
+      <form #form="ngForm" (ngSubmit)="updateRecipe(form)">
+        <div class="edit-recipe-title">
+          <label for="recipeName">Title <span class="red">*</span></label
+          ><br />
+          <input
+            type="text"
+            name="recipeName"
+            id="recipeName"
+            ngModel
+            #recipeNameInput="ngModel"
+            [ngModel]="recipe!.recipeName"
+            required
+            minlength="3"
+          />
+          <ng-container *ngIf="recipeNameInput.touched">
+            <p *ngIf="recipeNameInput.errors?.['required']" class="error">
+              Title is required.
+            </p>
+            <p *ngIf="recipeNameInput.errors?.['minlength']" class="error">
+              Title must be at least 3 characters long.
+            </p>
+          </ng-container>
+        </div>
+
+        <div class="edit-recipe-title">
+          <label for="imgUrl">Image URL<span class="red">*</span></label
+          ><br />
+          <input
+            type="text"
+            name="imgUrl"
+            id="imgUrl"
+            #imgUrlInput="ngModel"
+            [ngModel]="recipe!.imgUrl"
+            pattern="https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)"
+            required
+          />
+          <ng-container *ngIf="imgUrlInput.touched">
+            <p *ngIf="imgUrlInput.errors?.['required']" class="error">
+              Image URL is required.
+            </p>
+            <p *ngIf="imgUrlInput.errors?.['pattern']" class="error">
+              Image URL is invalid.
+            </p>
+          </ng-container>
+        </div>
+
+        <p class="edit-recipe-title">
+          <label for="category">Category <span class="red">*</span></label
+          ><br />
+          <select
+            name="category"
+            id="category"
+            #categoryInput="ngModel"
+            [ngModel]="recipe!.category"
+            required
+          >
+            <option value="Meat">Meat</option>
+            <option value="Fish">Fish</option>
+            <option value="Vegan">Vegan</option>
+          </select>
+        </p>
+
+        <div class="edit-recipe-content">
+          <label for="products"
+            >Products <span class="red">*</span> (one per row) / Example:
+            potatoes - 1 kg /</label
+          >
+          <textarea
+            type="text"
+            name="products"
+            id="products"
+            rows="8"
+            class="height"
+            ngModel
+            #productsInput="ngModel"
+            [ngModel]="recipe!.products"
+            required
+          ></textarea>
+          <ng-container *ngIf="productsInput.touched">
+            <p *ngIf="productsInput.errors?.['required']" class="error">
+              Products are required.
+            </p>
+          </ng-container>
+        </div>
+
+        <div class="edit-recipe-content">
+          <label for="preparation"
+            >Preparation <span class="red">*</span></label
+          >
+          <textarea
+            type="text"
+            name="preparation"
+            id="preparation"
+            rows="8"
+            class="height"
+            ngModel
+            #preparationInput="ngModel"
+            [ngModel]="recipe!.preparation"
+            required
+            minlength="10"
+          ></textarea>
+          <ng-container *ngIf="preparationInput.touched">
+            <p *ngIf="preparationInput.errors?.['required']" class="error">
+              Preparation is required.
+            </p>
+            <p *ngIf="preparationInput.errors?.['minlength']" class="error">
+              Preparation must be at least 10 characters long.
+            </p>
+          </ng-container>
+        </div>
+
+        <div class="edit-recipe-buttons">
+          <button type="button" routerLink="/recipes" class="cancel">
+            Cancel
+          </button>
+          <button class="public">Save</button>
+        </div>
+      </form>
+    </ng-container>
   </div>
 </div>
 <br />

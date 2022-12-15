@@ -75,10 +75,20 @@ function subscribe(req, res, next) {
         .catch(next);
 }
 
+function editRecipeInfo(req, res, next) {
+    const _id  = req.params.recipeId;
+    const { recipeName, imgUrl, category, products, preparation } = req.body;
+
+    recipeModel.findOneAndUpdate({ _id }, { recipeName, imgUrl, category, products, preparation }, { runValidators: true, new: true })
+        .then(x => { res.status(200).json(x) })
+        .catch(next);
+}
+
 module.exports = {
     getRecipes,
     createRecipe,
     getRecipe,
     subscribe,
-    getTopRecipes
+    getTopRecipes,
+    editRecipeInfo
 }

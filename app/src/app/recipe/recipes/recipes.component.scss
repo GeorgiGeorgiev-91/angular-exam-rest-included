@@ -37,6 +37,12 @@ p {
   margin: 0;
 }
 
+.title {
+  font-size: large;
+  height: 40px;
+  padding-bottom: 60px;
+}
+
 .recipe-name-wrapper {
   display: grid;
   justify-content: space-between;
@@ -57,7 +63,7 @@ p {
 
 .recipe-name {
   width: 100%;
-  font-size: 0.8em
+  font-size: 0.8em;
 }
 
 .columns {

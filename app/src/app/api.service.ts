@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { IRecipe } from './shared/interfaces';
+import { tap } from 'rxjs';
 
 const apiURL = environment.apiURL;
 
@@ -9,6 +10,8 @@ const apiURL = environment.apiURL;
   providedIn: 'root'
 })
 export class ApiService {
+
+  recipe: IRecipe | null | undefined = undefined;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -32,5 +35,18 @@ export class ApiService {
     preparation: string;
   }) {
     return this.httpClient.post<IRecipe>(`${apiURL}/recipes`, data, { withCredentials: true })
+  }
+
+  updateRecipe(data: {
+    recipeName: string;
+    imgUrl: string;
+    category: string;
+    products: string;
+    preparation: string;
+  }, recipeId: string | undefined){
+    console.log(this);
+    return this.httpClient.put<IRecipe>(`${apiURL}/recipes/${recipeId}`, data, { withCredentials: true }).pipe(
+      tap((recipe) => this.recipe = recipe)
+    );
   }
 }

@@ -109,3 +109,47 @@ p.error {
 .unliked {
   color: black;
 }
+
+.edit-recipe-buttons {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.edit-recipe-buttons button {
+  padding: 0.4em 1.5em;
+  color: white;
+  background-color: #f07c39;
+  border: none;
+  border-radius: 0.3em;
+  padding: 0.6em 1.2em;
+  margin-top: 1.5rem;
+  outline: none;
+}
+
+.edit-recipe-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-recipe-content {
+  min-height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.edit-recipe-content textarea {
+  width: 100%;
+  padding: 0.5em;
+  margin: 0;
+}
+
+.edit-recipe-content label {
+  margin-bottom: 0.3em;
+}
+
+.edit-recipe-title input, select {
+  width: 100%;
+  border-radius: 0.3em;
+  padding: 0.35em;
+}
