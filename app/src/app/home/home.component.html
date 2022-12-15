@@ -1,6 +1,13 @@
+<div class="welcome">
+  <h1>Let's Start Cooking With Poplar Recipes</h1>
+</div>
+
 <div class="container">
-  <div class="welcome">
-      <h3>Top Recipes!</h3>
-      <p>1 big square and 3 small</p>
+  <div class="wrapper">
+    <div *ngFor="let recipe of recipes" class="recipe-container">
+      <div [routerLink]="['/recipes', recipe._id]" class="recipe-name-wrapper">
+        <img class="recipe-image" [attr.src]="recipe.imgUrl" />
+      </div>
+    </div>
   </div>
 </div>

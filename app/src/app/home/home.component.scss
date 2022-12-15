@@ -2,17 +2,20 @@
 
 .welcome {
   padding: 0.3em 0.5em;
-  border: 1px solid #999;
-  border-radius: 0.3em;
   font-size: 0.8em;
+  margin: auto;
   margin-top: 1em;
+  width: 700px;
 }
 
-.welcome h3 {
+.welcome h1 {
   background-color: #2dd465;
   border-radius: 0.3em;
   width: 100%;
   padding: 0.3em 1em;
+  color: white;
+  text-align: center;
+  box-shadow: -1px 5px 15px black;
 }
 
 .welcome p {
@@ -44,4 +47,57 @@
 
 .welcome li {
   list-style: none;
+}
+
+/*Basic structure of slider*/
+.container {
+  width: 700px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  border: 10px solid #ffffff;
+  border-radius: 8px;
+  box-shadow: -1px 5px 15px black;
+  height: 400px;
+}
+
+/*Area of images*/
+.wrapper {
+  width: 100%;
+  display: flex;
+  animation: slide 16s infinite;
+}
+
+.recipe-name-wrapper{
+  object-fit: cover;
+  width: 700px;
+  height: 400px;
+}
+
+img {
+  object-fit: cover;
+  width: 700px;
+  height: 400px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+/*Animation activated by keyframes*/
+@keyframes slide {
+  0% {
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(-700px);
+  }
+  50% {
+    transform: translateX(-1400px);
+  }
+  75% {
+    transform: translateX(-2100px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }
