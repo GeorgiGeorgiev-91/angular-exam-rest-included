@@ -25,9 +25,14 @@ function getRecipes(req, res, next) {
 // }
 
 function getTopRecipes(req, res, next) {
-    recipeModel.find()
-        .sort({ likesCount: -1 }).limit(4)
-        .populate('userId')
+    recipeModel
+        .aggregate([{$project: {
+            imgUrl: 1,
+            countOfLikes: {
+                $size: "$likes"
+            }
+        }}])
+        .sort({ countOfLikes: -1 }).limit(4)
         .then(recipes => res.json(recipes))
         .catch(next);
 }
