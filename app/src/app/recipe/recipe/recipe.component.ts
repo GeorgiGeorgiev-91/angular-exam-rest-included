@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/api.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IRecipe } from 'src/app/shared/interfaces';
@@ -20,7 +20,8 @@ export class RecipeComponent {
   constructor(
     private apiService: ApiService,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.fetchRecipe();
   }
@@ -76,6 +77,17 @@ export class RecipeComponent {
     this.apiService.dislikeRecipe(this.recipe?._id).subscribe({
       next: () => {
         this.fetchRecipe();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  deleteRecipe(): void {
+    this.apiService.deleteRecipe(this.recipe?._id).subscribe({
+      next: () => {
+        this.router.navigate(['/recipes']);
       },
       error: (err) => {
         console.log(err);

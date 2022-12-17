@@ -27,6 +27,7 @@ export class ApiService {
     return this.httpClient.get<IRecipe>(`/api/recipes/${id}`);
   }
 
+
   saveRecipe(data: {
     recipeName: string;
     imgUrl: string;
@@ -61,5 +62,9 @@ export class ApiService {
     return this.httpClient.put<IRecipe>(`/api/recipes/dislike/${recipeId}`, '').pipe(
       tap((recipe) => this.recipe = recipe)
     );
+  }
+
+  deleteRecipe(recipeId: string | undefined) {
+    return this.httpClient.delete<IRecipe>(`/api/recipes/${recipeId}`);
   }
 }

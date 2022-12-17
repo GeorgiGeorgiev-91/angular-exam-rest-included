@@ -107,6 +107,21 @@ function dislikeRecipe(req, res, next){
         .catch(next);
 }
 
+function deleteRecipe(req, res, next) {
+    const recipeId = req.params.recipeId;
+    console.log('delete '+ recipeId);
+
+        recipeModel.deleteOne({ _id: recipeId })
+        .then((deletedOne) => {
+            if (deletedOne) {
+                res.status(200).json(deletedOne)
+            } else {
+                res.status(401).json({ message: `Not allowed!` });
+            }
+        })
+        .catch(next);
+}
+
 module.exports = {
     getRecipes,
     createRecipe,
@@ -114,5 +129,6 @@ module.exports = {
     getTopRecipes,
     editRecipeInfo,
     likeRecipe,
-    dislikeRecipe
+    dislikeRecipe,
+    deleteRecipe
 }
