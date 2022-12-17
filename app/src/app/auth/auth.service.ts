@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import {Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, filter, Subscription, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUser } from '../shared/interfaces';
 
@@ -9,7 +9,10 @@ const apiURL = environment.apiURL;
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
+
+  private user$$ = new BehaviorSubject<undefined | null | IUser>(undefined);
+  user$ = this.user$$.asObservable().pipe(filter(val => val !== undefined));
 
   user: IUser | null | undefined = undefined;
 
@@ -17,12 +20,17 @@ export class AuthService {
     return !!this.user;
   }
 
-  constructor(private http: HttpClient) {
+  subscription: Subscription;
 
+  constructor(private http: HttpClient) {
+    this.subscription = this.user$.subscribe(user => {
+      this.user = user;
+    })
   }
 
+
   login(data: { email: string, password: string }) {
-    return this.http.post<IUser>(`${apiURL}/login`, data, { withCredentials: true }).pipe(
+    return this.http.post<IUser>(`/api/login`, data).pipe(
       tap((user) => this.user = user)
     )
   }
@@ -34,20 +42,24 @@ export class AuthService {
     personName: string;
     sex: string;
   }) {
-    return this.http.post<IUser>(`${apiURL}/register`, data, { withCredentials: true }).pipe(
-      tap((user) => this.user = user)
+    return this.http.post<IUser>(`/api/register`, data).pipe(
+      tap((user) => this.user$$.next(user))
     );
   }
 
   getProfileInfo() {
-    return this.http.get<IUser>(`${apiURL}/users/profile`, { withCredentials: true }).pipe(
-      tap((user) => this.user = user)
+    return this.http.get<IUser>(`/api/users/profile`).pipe(
+      tap((user) => this.user$$.next(user))
     )
   }
 
+  getProfile() {
+    return this.http.get<IUser>(`/api/users/profile`);
+  }
+
   logout() {
-    return this.http.post<IUser>(`${apiURL}/logout`, {}, { withCredentials: true }).pipe(
-      tap(() => this.user = null)
+    return this.http.post<IUser>(`/api/logout`, {}).pipe(
+      tap(() => this.user$$.next(null))
     );
   }
 
@@ -55,9 +67,13 @@ export class AuthService {
     email: string;
     personName: string;
     sex: string;
-  }){
-    return this.http.put<IUser>(`${apiURL}/users/profile`, data, { withCredentials: true }).pipe(
-      tap((user) => this.user = user)
+  }) {
+    return this.http.put<IUser>(`/api/users/profile`, data).pipe(
+      tap((user) => this.user$$.next(user))
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

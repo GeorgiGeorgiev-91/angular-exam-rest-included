@@ -9,10 +9,6 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent {
   title = 'app';
 
-  get isAuthenticating(): boolean {
-    return this.authService.user === undefined;
-  }
-
   constructor(
     private authService: AuthService
   ){

@@ -7,11 +7,11 @@
       <form>
         <span><img class="recipe-image" [attr.src]="recipe?.imgUrl" /></span>
 
-        <div>
+        <div class="like-buttons">
           <i class="fas fa-heart liked"></i
           > {{recipe?.likes?.length}}
           <button class="like" *ngIf="isLogged && likeable" (click)="like()">Like</button>
-          <button class="like" *ngIf="isLogged && !likeable" (click)="dislike()">Dislike</button>
+          <button class="dislike" *ngIf="isLogged && !likeable" (click)="dislike()">Dislike</button>
         </div>
         <br />
 
@@ -44,7 +44,7 @@
         <ng-container *ngIf="isOwner">
           <div class="recipe-buttons">
             <button (click)="inUpdateMode = !inUpdateMode" class="edit-button">
-              edit if owner
+              Edit
             </button>
           </div>
         </ng-container>

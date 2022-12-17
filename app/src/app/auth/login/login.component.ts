@@ -28,8 +28,6 @@ export class LoginComponent {
       },
         error: (err) => {
           console.log(err);
-
-          //TODO display error
         }
     });
   }

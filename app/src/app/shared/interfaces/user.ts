@@ -5,7 +5,6 @@ export interface IUser {
   personName: string,
   sex: string,
   // recipes: string[],
-  // posts: string[],
   // created_at: string,
   // updatedAt: string,
   // __v: number

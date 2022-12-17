@@ -16,15 +16,15 @@ export class ApiService {
   constructor(private httpClient: HttpClient) { }
 
   loadRecipes() {
-    return this.httpClient.get<IRecipe[]>(`${apiURL}/recipes`)
+    return this.httpClient.get<IRecipe[]>(`/api/recipes`)
   }
 
   loadTopRecipes() {
-    return this.httpClient.get<IRecipe[]>(`${apiURL}/recipes/top`)
+    return this.httpClient.get<IRecipe[]>(`/api/recipes/top`)
   }
 
   loadRecipe(id: string) {
-    return this.httpClient.get<IRecipe>(`${apiURL}/recipes/${id}`, { withCredentials: true });
+    return this.httpClient.get<IRecipe>(`/api/recipes/${id}`);
   }
 
   saveRecipe(data: {
@@ -34,7 +34,7 @@ export class ApiService {
     products: string;
     preparation: string;
   }) {
-    return this.httpClient.post<IRecipe>(`${apiURL}/recipes`, data, { withCredentials: true })
+    return this.httpClient.post<IRecipe>(`/api/recipes`, data)
   }
 
   updateRecipe(data: {
@@ -44,22 +44,21 @@ export class ApiService {
     products: string;
     preparation: string;
   }, recipeId: string | undefined){
-    // console.log(this);
-    return this.httpClient.put<IRecipe>(`${apiURL}/recipes/${recipeId}`, data, { withCredentials: true }).pipe(
+    return this.httpClient.put<IRecipe>(`/api/recipes/${recipeId}`, data).pipe(
       tap((recipe) => this.recipe = recipe)
     );
   }
 
   likeRecipe(recipeId: string | undefined){
     // console.log("like "+recipeId);
-    return this.httpClient.put<IRecipe>(`${apiURL}/recipes/like/${recipeId}`, '', { withCredentials: true }).pipe(
+    return this.httpClient.put<IRecipe>(`/api/recipes/like/${recipeId}`, '').pipe(
       tap((recipe) => this.recipe = recipe)
     );
   }
 
   dislikeRecipe(recipeId: string | undefined){
     // console.log("dislike "+recipeId);
-    return this.httpClient.put<IRecipe>(`${apiURL}/recipes/dislike/${recipeId}`, '', { withCredentials: true }).pipe(
+    return this.httpClient.put<IRecipe>(`/api/recipes/dislike/${recipeId}`, '').pipe(
       tap((recipe) => this.recipe = recipe)
     );
   }

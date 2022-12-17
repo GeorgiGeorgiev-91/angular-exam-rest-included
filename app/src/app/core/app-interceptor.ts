@@ -14,19 +14,12 @@ export class AppInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let reqStream$ = next.handle(req);
-        if (req.url.startsWith('/api')) {
-            reqStream$ = next.handle(req.clone({
-                url: req.url.replace('/api/', apiURL),
-                withCredentials: true
-            }));
+
+        if(req.url.startsWith('/api')){
+          req = req.clone({url: req.url.replace('/api', apiURL), withCredentials: true})
         }
-        return reqStream$.pipe(
-            catchError((err) => {
-                this.router.navigate(['/not-found'], { queryParams: { error: err.message } });
-                return throwError(() => err);
-            })
-        );
+
+        return next.handle(req);
     }
 }
 

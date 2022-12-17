@@ -12,12 +12,15 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
+import { appInterceptorProvider } from './core/app-interceptor';
+import { AuthenticateComponent } from './authenticate/authenticate.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AuthenticateComponent
   ],
   imports: [
     AuthRoutingModule,
@@ -31,6 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule
   ],
   providers: [
+    appInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })
