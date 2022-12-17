@@ -9,7 +9,9 @@
 
         <div>
           <i class="fas fa-heart liked"></i
-          ><button class="like" *ngIf="isLogged">Like</button>
+          > {{recipe?.likes?.length}}
+          <button class="like" *ngIf="isLogged && likeable" (click)="like()">Like</button>
+          <button class="like" *ngIf="isLogged && !likeable" (click)="dislike()">Dislike</button>
         </div>
         <br />
 

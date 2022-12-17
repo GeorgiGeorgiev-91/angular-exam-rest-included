@@ -44,8 +44,22 @@ export class ApiService {
     products: string;
     preparation: string;
   }, recipeId: string | undefined){
-    console.log(this);
+    // console.log(this);
     return this.httpClient.put<IRecipe>(`${apiURL}/recipes/${recipeId}`, data, { withCredentials: true }).pipe(
+      tap((recipe) => this.recipe = recipe)
+    );
+  }
+
+  likeRecipe(recipeId: string | undefined){
+    // console.log("like "+recipeId);
+    return this.httpClient.put<IRecipe>(`${apiURL}/recipes/like/${recipeId}`, '', { withCredentials: true }).pipe(
+      tap((recipe) => this.recipe = recipe)
+    );
+  }
+
+  dislikeRecipe(recipeId: string | undefined){
+    // console.log("dislike "+recipeId);
+    return this.httpClient.put<IRecipe>(`${apiURL}/recipes/dislike/${recipeId}`, '', { withCredentials: true }).pipe(
       tap((recipe) => this.recipe = recipe)
     );
   }

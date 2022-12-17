@@ -65,15 +65,6 @@ function createRecipe(req, res, next) {
     .catch(next);
 }
 
-function subscribe(req, res, next) {
-    const recipeId = req.params.recipeId;
-    const { _id: userId } = req.user;
-    recipeModel.findByIdAndUpdate({ _id: recipeId }, { $addToSet: { subscribers: userId } }, { new: true })
-        .then(updatedRecipe => {
-            res.status(200).json(updatedRecipe)
-        })
-        .catch(next);
-}
 
 function editRecipeInfo(req, res, next) {
     const _id  = req.params.recipeId;
@@ -84,11 +75,39 @@ function editRecipeInfo(req, res, next) {
         .catch(next);
 }
 
+function likeRecipe(req, res, next){
+    const recipeId = req.params.recipeId;
+    const userId = req.user._id;
+
+    // console.log(recipeId);
+    // console.log(userId);
+    // console.log("like " + userId);
+
+
+    recipeModel.findByIdAndUpdate({ _id: recipeId }, { $addToSet: { likes: userId }}, { new: true })
+        .then(() => res.status(200).json({ message: 'Liked successful!' }))
+        .catch(next);
+}
+
+function dislikeRecipe(req, res, next){
+    const recipeId = req.params.recipeId;
+    const userId = req.user._id;
+
+    // console.log(recipeId);
+    // console.log(req.user);
+    // console.log("dislike " + userId);
+
+    recipeModel.findByIdAndUpdate({ _id: recipeId }, { $pull: { "likes": userId }}, { multi: true })
+        .then(() => res.status(200).json({ message: 'Disiked successful!' }))
+        .catch(next);
+}
+
 module.exports = {
     getRecipes,
     createRecipe,
     getRecipe,
-    subscribe,
     getTopRecipes,
-    editRecipeInfo
+    editRecipeInfo,
+    likeRecipe,
+    dislikeRecipe
 }

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/api.service';
@@ -14,20 +14,29 @@ export class RecipeComponent {
 
   recipe: IRecipe | undefined;
 
-  inUpdateMode = false;
+  inUpdateMode: boolean = false;
+  likeable: boolean = false;
 
   constructor(
     private apiService: ApiService,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService
-    ) {
-      this.fetchRecipe();
-    }
+  ) {
+    this.fetchRecipe();
+  }
 
-  fetchRecipe(): void{
+  fetchRecipe(): void {
     this.recipe = undefined;
     const id = this.activatedRoute.snapshot.params['recipeId'];
-    this.apiService.loadRecipe(id).subscribe(recipe => this.recipe = recipe);
+    this.apiService.loadRecipe(id).subscribe(recipe => {
+      this.recipe = recipe;
+      if (this.recipe.likes.includes(String(this.authService.user?._id))) {
+        this.likeable = false;
+      } else {
+        this.likeable = true;
+      }
+
+    });
   }
 
   get isLogged(): boolean {
@@ -43,10 +52,32 @@ export class RecipeComponent {
     if (form.invalid) { return; }
     this.apiService.updateRecipe(form.value, this.recipe?._id).subscribe({
       next: () => {
-          this.fetchRecipe();
-          this.inUpdateMode = false;
+        this.fetchRecipe();
+        this.inUpdateMode = false;
       },
-      error: (err)=> {
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  like(): void {
+    this.apiService.likeRecipe(this.recipe?._id).subscribe({
+      next: () => {
+        this.fetchRecipe();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  dislike(): void {
+    this.apiService.dislikeRecipe(this.recipe?._id).subscribe({
+      next: () => {
+        this.fetchRecipe();
+      },
+      error: (err) => {
         console.log(err);
       }
     })
